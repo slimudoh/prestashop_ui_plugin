@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Prestashop Popup</title>
+  </head>
+  <body>
+    <script>
+      var screenWidth = window.innerWidth;
+      var screenHeight = window.innerHeight;
+      document.addEventListener("DOMContentLoaded", checkStore(), false);
+
+      function checkStore() {
+        if (typeof Storage !== "undefined") {
+          if (!sessionStorage.wawoohModal) {
+            setTimeout(function() {
+              showModal();
+            }, 2000);
+          }
+        } else {
+          setTimeout(function() {
+            showModal();
+          }, 2000);
+        }
+      }
+
+      function showModal() {
+        var popUp = document.createElement("DIV");
+        var popUpCover = document.createElement("DIV");
+        var popUpContent = document.createElement("DIV");
+
+        sessionStorage.wawoohModal = "true";
+
+        popUp.style.position = "fixed";
+        popUp.style.top = 0;
+        popUp.style.left = 0;
+        popUp.style.right = 0;
+        popUp.style.bottom = 0;
+        popUp.style.background = " rgba(0, 0, 0, 0.85)";
+        popUp.style.boxSizing = "border-box";
+        popUp.style.overflow = "auto";
+        popUp.style.display = "block";
+        popUp.setAttribute("id", "wawooh__popup");
+        popUp.style.zIndex = "99999999999999999";
+
+        popUpCover.style.width = "100%";
+        popUpCover.style.maxWidth = "650px";
+        popUpCover.style.margin = "50px auto";
+        popUpCover.style.padding = "0 10px";
+        popUpCover.style.boxSizing = "border-box";
+
+        if (screenWidth > 700) {
+          popUpContent.style.width = "100%";
+          popUpContent.style.background = "#000";
+          popUpContent.style.display = "flex";
+          popUpContent.style.flexDirection = "row";
+          popUpContent.style.flexWrap = "nowrap";
+          popUpContent.style.alignItems = "flex-start";
+          popUpContent.style.justifyContent = "center";
+          popUpContent.style.alignContent = "center";
+          popUpContent.style.boxShadow = "0 1px 5px rgba(0, 0, 0, 0.7)";
+          popUpContent.style.borderRadius = "4px";
+          popUpContent.style.boxSizing = "border-box";
+          popUpContent.setAttribute("id", "popup__content");
+        } else {
+          popUpContent.style.width = "100%";
+          popUpContent.style.background = "#000";
+          popUpContent.style.display = "flex";
+          popUpContent.style.flexDirection = "row";
+          popUpContent.style.flexWrap = "wrap";
+          popUpContent.style.alignItems = "flex-start";
+          popUpContent.style.justifyContent = "center";
+          popUpContent.style.alignContent = "center";
+          popUpContent.style.boxShadow = "0 1px 5px rgba(0, 0, 0, 0.7)";
+          popUpContent.style.borderRadius = "4px";
+          popUpContent.style.boxSizing = "border-box";
+          popUpContent.setAttribute("id", "popup__content");
+        }
+
+        popUpCover.appendChild(popUpContent);
+        popUp.appendChild(popUpCover);
+
+        if (screenWidth > 700) {
+          popUpContent.innerHTML = `<div style=" width: 50%;box-sizing: border-box;">
+              <img src="img/discount.svg" alt="Black Friday"  style="  width: 100%; display: block;" />
+          </div>
+          <div style=" width: 50%;box-sizing: border-box;">
+            <p style="text-align: right; padding: 5px; margin: 0;  width: 100%;box-sizing: border-box;">
+              <span onclick="closeModal()" style=" color: #d19822;text-decoration: underline;cursor: pointer;font-size: 14px;">I don't love discounts</span>
+            </p>
+            <div style=" width: 100%;margin-top: 50px;padding: 0 5px;box-sizing: border-box;">
+              <p style=" color: #d19822;text-align: center;margin-bottom: 20px; font-size: 15px;">
+                Fill the fields to get your coupon
+              </p>
+              <div  style="width: 80%; height: 40px;
+        margin: 0 auto 15px auto;background: #282828; border: 0;
+        color: #fff; border-radius: 4px;overflow: hidden;">
+                <input type="text" placeholder="Name" style="width: 100%;height: 40px;padding: 0 5px;background: transparent;border: 0; outline: 0; font-size: 14px; color: #fff;" id="name" />
+              </div>
+              <div  style="width: 80%; height: 40px;
+              margin: 0 auto 15px auto;background: #282828; border: 0;
+        color: #fff; border-radius: 4px;overflow: hidden;">
+                <input type="text" placeholder="Email" style="width: 100%;height: 40px;padding: 0 5px;background: transparent;border: 0; outline: 0; font-size: 14px; color: #fff;"  id="email" />
+              </div>
+              <div  style="width: 80%; height: 40px;
+              margin: 0 auto 15px auto;background: #282828; border: 0;
+        color: #fff; border-radius: 4px;overflow: hidden;">
+                <input type="text" placeholder="Phone Number" style="width: 100%;height: 40px;padding: 0 5px;background: transparent;border: 0; outline: 0; font-size: 14px; color: #fff;"  id="phone" />
+              </div>
+              <div  style="width: 80%; height: 40px;
+              margin: 0 auto 15px auto;background: #282828; border: 0;
+        color: #fff; border-radius: 4px;overflow: hidden;">
+                <button onclick="getUserCoupondetails(event)" style="  width: 100%;height: 40px; padding: 0 5px;background: #d19822;border-radius: 4px;color: #000;cursor: pointer;font-size: 15px;font-weight: 700;text-decoration: none;white-space: nowrap;border: 0;
+        outline: 0;"  id="send__coupon">SEND ME A COUPON CODE</button>
+              </div>
+            </div>
+          </div>`;
+        } else {
+          popUpContent.innerHTML = `<div style=" width: 100%;box-sizing: border-box;">
+            <img src="./discount.svg" alt="Black Friday"  style="  width: 100%; display: block;" />
+          </div>
+          <div style=" width: 100%;box-sizing: border-box;">
+            <p style="text-align: right; padding: 5px; margin: 0;  width: 100%;box-sizing: border-box;">
+              <span onclick="closeModal()" style=" color: #d19822;text-decoration: underline;cursor: pointer;font-size: 14px;">I don't love discounts</span>
+            </p>
+            <div style=" width: 100%;margin-top: 50px;padding: 0 5px;box-sizing: border-box;">
+              <p style=" color: #d19822;text-align: center;margin-bottom: 20px; font-size: 15px;">
+                Fill the fields to get your coupon
+              </p>
+              <div  style="width: 80%; height: 40px;
+              margin: 0 auto 15px auto;background: #282828; border: 0;
+        color: #fff; border-radius: 4px;overflow: hidden;">
+                <input type="text" placeholder="Name" style="width: 100%;height: 40px;padding: 0 5px;background: transparent;border: 0; outline: 0; font-size: 14px; color: #fff;" id="name" />
+              </div>
+              <div  style="width: 80%; height: 40px;
+              margin: 0 auto 15px auto;background: #282828; border: 0;
+        color: #fff; border-radius: 4px;overflow: hidden;">
+                <input type="text" placeholder="Email" style="width: 100%;height: 40px;padding: 0 5px;background: transparent;border: 0; outline: 0; font-size: 14px; color: #fff;"  id="email" />
+              </div>
+              <div  style="width: 80%; height: 40px;
+              margin: 0 auto 15px auto;background: #282828; border: 0;
+        color: #fff; border-radius: 4px;overflow: hidden;">
+                <input type="text" placeholder="Phone Number" style="width: 100%;height: 40px;padding: 0 5px;background: transparent;border: 0; outline: 0; font-size: 14px; color: #fff;"  id="phone" />
+              </div>
+              <div  style="width: 80%; height: 40px;
+              margin: 0 auto 15px auto;background: #282828; border: 0;
+        color: #fff; border-radius: 4px;overflow: hidden;">
+                <button onclick="getUserCoupondetails(event)" style="  width: 100%;height: 40px; padding: 0 5px;background: #d19822;border-radius: 4px;color: #000;cursor: pointer;font-size: 15px;font-weight: 700;text-decoration: none;white-space: nowrap;border: 0;
+        outline: 0;"  id="send__coupon">SEND ME A COUPON CODE</button>
+              </div>
+            </div>
+          </div>`;
+        }
+
+        document.body.appendChild(popUp);
+      }
+
+      function getUserCoupondetails(e) {
+        var name = document.getElementById("name");
+        var email = document.getElementById("email");
+        var phone = document.getElementById("phone");
+        var expression = /\S+@\S+\.\S+/;
+
+        if (name.value.trim() === "") {
+          alert("Your name is required");
+          return;
+        }
+
+        if (phone.value.trim() === "") {
+          alert("Your Phone number is required");
+          return;
+        }
+
+        if (isNaN(parseInt(phone.value.trim(), 10))) {
+          alert("Your Phone number is required");
+          return;
+        }
+
+        if (email.value.trim() === "") {
+          alert("Your Email is required");
+          return;
+        }
+
+        if (!expression.test(email.value.trim())) {
+          alert("Your Email is required");
+          return;
+        }
+
+        e.preventDefault();
+
+        var couponDetails = {
+          name: name.value.trim(),
+          email: email.value.trim(),
+          phone: phone.value.trim()
+        };
+
+        console.log(couponDetails);
+      }
+
+      function closeModal() {
+        var popup = document.getElementById("wawooh__popup");
+        popup.style.display = "none";
+      }
+    </script>
+  </body>
+</html>
